@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.sw.dao.GoodsDao">
+     
+     
+    <resultMap type="Goods" id="goods">
+      <id column="goodsid" jdbcType="INTEGER" property="goodsid"></id>
+      <result column="categoryname" property="categoryname"></result>
+       <result column="categoryname" property="categoryname"></result>
+      <collection property="goodslist" resultMap="Goods"></collection>
+    </resultMap>
+     
+	<cache eviction="FIFO" flushInterval="60000" size="500" readOnly="true"></cache>
+
+	<insert id="savegoods" parameterType="Goods" useGeneratedKeys="true"  flushCache="true">
+		insert into gmm_goods(area,characterlevel,charactereqs,price,picture,rate,equipmentlevel,category_id,title,occupation,wenzhang,hufu,chibangweiba,zuojichongwu,jinbidianquan,beibaocangku,pklevel,fulllevelnums,fuhuo,goodsnums,equipmentname,else1) 
+		        values(#{area}, #{characterlevel},#{charactereqs},#{price},#{picture},#{rate},#{equipmentlevel},#{category_id},#{title},#{occupation},#{wenzhang},#{hufu},#{chibangweiba},#{zuojichongwu},#{jinbidianquan},#{beibaocangku},#{pklevel},#{fulllevelnums},#{fuhuo},#{goodsnums},#{equipmentname},#{else1})
+	</insert>
+	
+	<select id="querryallgoodsbycategory" parameterType="int" resultType="Goods" useCache="false">
+	    select * from goods where category_id=#{category_id}
+	</select>
+	
+	<select id="querryallgoodsbycategoryPage2" parameterType="int" resultType="Goods" useCache="false">
+	    select * from goods where category_id=#{0} limit #{1},#{2}
+	</select>
+
+   
+   	<select id="selectcountsfromgoods"  resultType="int" useCache="false">
+	    select count(1) from goods where category_id=#{category}
+	</select>
+    
+	<select id="querryallaccounts"  resultType="Goods" useCache="false">
+	    select goodsid,area,characterlevel,charactereqs,price,picture,category_id,title,occupation,wenzhang,hufu,chibangweiba,zuojichongwu,jinbidianquan,beibaocangku,pklevel,fulllevelnums,fuhuo,goodsnums,else1 from goods where category_id=1
+	</select> 
+	
+	<select id="querryallgold"  resultType="Goods" useCache="false">
+	    select title,price,area,rate,goodsnums,category_id,else1 from goods where category_id=3
+	</select>
+	
+	<select id="querryallequipments"  resultType="Goods" useCache="false">
+	    select title,price,area,equipmentname,equipmentlevel,goodsnums,category_id,else1 from goods where category_id=2
+	</select>
+	
+	
+	<select id="querryallgoods"  resultType="Goods" useCache="false">
+	    select * from goods 
+	</select>
+	
+	<delete id="deleteById" parameterType="int" flushCache="true">
+	   DELETE  from goods where goodsid=#{id}
+	</delete>
+	
+	<select id="selectAll" resultType="User">
+	    select * from user
+	</select>
+	
+	
+	<select id="selectgoodsbyId"  resultType="Goods" useCache="false"  >
+	    select goodsid,area,characterlevel,charactereqs,price,picture,rate,equipmentlevel,categoryid,title,occupation,wenzhang,hufu,chibangweiba,zuojichongwu,jinbidianquan,beibaocangku,pklevel,fulllevelnums,fuhuo,goodsnums,equipmentname,else1 from goods where goodsid=#{id}
+	</select>  
+	
+	
+	<update id="modifygoods" parameterType="Goods">
+	    update goods set area=#{area},characterlevel=#{characterlevel},charactereqs=#{charactereqs},price=#{price},category_id=#{category_id},title=#{title},occupation=#{occupation},wenzhang=#{wenzhang},hufu=#{hufu},chibangweiba=#{chibangweiba},zuojichongwu=#{zuojichongwu},jinbidianquan=#{jinbidianquan},beibaocangku=#{beibaocangku},pklevel=#{pklevel},fulllevelnums=#{fulllevelnums},fuhuo=#{fuhuo},goodsnums=#{goodsnums},else1=#{else1} where goodsid=#{goodsid}
+	</update>
+	
+</mapper> 

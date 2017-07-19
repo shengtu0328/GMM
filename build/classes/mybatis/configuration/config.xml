@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="useColumnLabel" value="true" /><!--默认为true sql使用列别名后  mybatis自动替换列名后进行映射  -->
+		<setting name="useGeneratedKeys" value="true" />  <!-- 对数据库 insert时 不插入 id  id是自增的 -->
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="mapUnderscoreToCamelCase" value="true" /> <!-- 只要列名和属性名符合驼峰命名 mybatis就会自动转换  -->
+       <!--  <setting name="logImpl" value="LOG4J"/>  --> 
+    </settings>  
+
+</configuration>

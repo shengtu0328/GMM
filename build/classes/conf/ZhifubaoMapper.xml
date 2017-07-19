@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sw.dao.ZhifubaoDao">
+    
+   <select id="zhifubaologin" parameterType="String" resultType="Zhifubao" useCache="false">
+	    select * from zhifubao where username=#{username}
+	</select>
+	
+	
+		
+	<update id="jianqian" >
+	    update zhifubao set money=money-#{0} where username=#{1}
+	</update>
+	
+		
+	<update id="jiaqian" >
+	    update zhifubao set money=money+#{0} where username=#{1}
+	</update>
+	
+</mapper> 

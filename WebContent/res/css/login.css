@@ -1,0 +1,65 @@
+@CHARSET "UTF-8";
+body, h1, h2, h3, h4, h5, h6, hr, div, p, blockquote, dl, dt, dd, ul, ol, li, pre, fieldset, lengend, input, textarea, form, th, td {
+    margin: 0;
+    padding: 0;
+}
+.header {
+    color: #fff;
+    width: 100%;
+    font-size: 30px;
+    margin-top: 15px;
+    z-index: 200;
+    text-align: center;
+}
+.header h3 {
+    text-align: center;
+    font-size: 100%;
+    font-weight: normal;
+}
+.header h2 {
+    height: 46px;
+    line-height: 46px;
+    width: 100%;
+    font-weight: normal;
+    position: relative;
+    font-size: 24px;
+    color: #353535;
+}
+.mod_regist_form {
+    position: relative;
+    z-index: 1000;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 0;
+    color: #666;
+}
+.regist_info {
+    position: relative;
+    z-index: 900;
+}
+fieldset {
+    border: none;
+}
+fieldset {
+    display: block;
+    -webkit-margin-start: 2px;
+    -webkit-margin-end: 2px;
+    -webkit-padding-before: 0.35em;
+    -webkit-padding-start: 0.75em;
+    -webkit-padding-end: 0.75em;
+    -webkit-padding-after: 0.625em;
+    min-width: -webkit-min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+}
+#input_wrap_username {
+    display: block;
+    z-index: 790;
+}
+.input_wrap {
+    position: relative;
+    display: none;
+    z-index: 760;
+}

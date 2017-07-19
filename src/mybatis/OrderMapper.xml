@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdo.order.dao.OrderDao">
+
+    <resultMap type="com.sdo.entity.Order" id="Order">
+    <id column="order_id" property="orderId"/>
+    <result column="buyer"  property="buyer"/>
+    <result column="total_price"  property="totalPrice"/>
+    <result column="state" property="state"/>
+    <result column="qq" property="qq"/>
+    <result column="telephone" property="telephone"/>
+    <result column="game_account" property="gameAccount"/>
+    <result column="area" property="area"/>
+    <result column="create_time" property="createTime"/>
+    <collection property="orderdetailList" resultMap="OrderDetail"></collection>
+    </resultMap>  
+
+  <resultMap type="com.sdo.entity.Orderdetail" id="OrderDetail">
+    <id column="orderdetail_id" property="orderdetailId"/>
+    <result column="goods_id"  property="goodsId"/>
+    <result column="title"  property="title"/>
+    <result column="price" property="price"/>
+    <result column="goods_nums" property="goodsNums"/>
+    <result column="subtotal" property="subtotal"/>
+    <result column="image" property="image"/>
+    <result column="seller" property="seller"/>
+    </resultMap>  
+
+
+	<select id="querry" resultType="Order">
+		SELECT * FROM gmm_order
+		<where>
+			<if test="state != null ">
+				state = #{state}
+			</if>
+			<if test="orderId != null">
+				AND order_id like #{orderId}
+			</if>
+			<if test="buyer != null">
+				AND buyer like #{buyer}
+			</if>
+		</where>
+	</select>
+    
+    
+
+
+
+	<insert id="addOrderdetail" parameterType="java.util.List"
+		useGeneratedKeys="true">
+		insert into gmm_orderdetail
+		(goods_id,price,title,goods_nums,image,subtotal,order_id,buyer,seller)
+		values
+		<foreach collection="list" item="orderdetail" separator=",">
+			(
+			#{orderdetail.goodsId},#{orderdetail.price},#{orderdetail.title},#{orderdetail.goodsNums},#{orderdetail.image},#{orderdetail.subtotal},#{orderdetail.orderId},#{orderdetail.buyer},#{orderdetail.seller}
+			)
+		</foreach>
+	</insert>
+
+	<insert id="addOrder" useGeneratedKeys="true" keyProperty="orderId"
+		parameterType="Order">
+		insert into
+		gmm_order(buyer,state,total_price,area,qq,telephone,game_account)
+		values
+		(
+		#{buyer},#{state},#{totalPrice},#{area},#{qq},#{telephone},#{gameAccount}
+		)
+	</insert>
+
+	<update id="updateState">
+		UPDATE gmm_order SET
+		state =#{state}
+		WHERE
+		order_id=#{orderId}
+	</update>
+	
+	 <select id="getGoodsByOrderId" resultType="Goods">
+   select a.* from gmm_goods a,gmm_orderdetail b,gmm_order c where a.goodsId=b.goods_id and b.order_id=c.order_id and c.order_id=#{_parameter}
+   </select>
+
+
+  <select id="querryOrderdetailbByOrderId" resultType="Orderdetail">
+   select * from gmm_orderdetail  where order_id=#{_parameter}
+   </select>
+  
+ <select id="querryOrderByOrderId" resultType="Order">
+   select * from gmm_order  where order_id=#{orderId}
+   </select>
+</mapper>

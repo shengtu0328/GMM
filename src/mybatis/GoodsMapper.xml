@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdo.goods.dao.GoodsDao">
+<!-- and!&quot;&quot;.equals(categoryId.trim()) -->
+<insert id="save" parameterType="User" useGeneratedKeys="true">
+	insert into
+	gmm_goods(area,character_level,character_eqs,price,image,rate,equipment_level,category_id,title,occupation,wenzhang,hufu,chibangweiba,zuojichongwu,jinbidianquan,beibaocangku,pk_level,full_level_nums,fuhuo,goods_nums,equipment_name,goods_else,dress,game_account,game_password,telephone,code,storage,state,seller)
+	values(#{area},
+	#{characterLevel},#{characterEqs},#{price},#{image},#{rate},#{equipmentLevel},#{categoryId},#{title},#{occupation},#{wenzhang},#{hufu},#{chibangweiba},#{zuojichongwu},#{jinbidianquan},#{beibaocangku},#{pkLevel},#{fullLevelNums},#{fuhuo},#{goodsNums},#{equipmentName},#{goodsElse},#{dress},#{gameAccount},#{gamePassword},#{telephone},#{code},#{storage},#{state},#{seller})
+</insert>
+
+
+	<select id="querryByCategoryByPage" resultType="Goods">
+		SELECT goodsId,title,price,image FROM gmm_goods where category_id=#{categoryId}
+		order by create_time desc limit #{offset},#{limit}
+	</select>
+	
+	<select id="querryByPage" resultType="Goods">
+	SELECT goodsId,title,price,image FROM gmm_goods where 1=1
+	<if test="categoryId!=null">and category_id=#{categoryId}</if>
+	order by create_time desc limit #{pm.start},#{pm.pageSize}
+</select>
+
+	<select id="searchByCondition" resultType="Goods">
+		SELECT * FROM gmm_goods
+		<where>
+			<if test="condition!= null and!&quot;&quot;.equals(condition.trim())">
+				title like '%' #{condition} '%'
+			</if>
+			<if test="condition != null and!&quot;&quot;.equals(condition.trim())">
+				or occupation like '%' #{condition} '%'
+			</if>
+			<if test="condition != null and!&quot;&quot;.equals(condition.trim())">
+				or seller like '%' #{condition} '%'
+			</if>
+		</where>
+	</select>
+	
+	
+	
+	<select id="getAutoList" resultType="Goods">
+		SELECT * FROM gmm_goods
+		<where>
+			
+				title like '%' #{trem} '%'
+			
+		</where>
+	</select>
+	<select id="getTotalRows" resultType="int">
+		select count(*)  FROM gmm_goods where category_id=#{categoryId}
+	</select>
+	
+	<select id="getDetail" resultType="Goods">
+		select * FROM gmm_goods where goodsId=#{goodsId}
+	</select>
+   
+   <select id="getGoodsByOrderId" resultType="Goods" >
+   select a.* from gmm_goods a,gmm_orderdetail b,gmm_order c where a.goodsId=b.goods_id and b.order_id=c.order_id and c.order_id=#{goodsId}
+   </select>
+   
+    <update id="changeGoodsState">
+    UPDATE gmm_goods SET
+    state =#{state}
+    WHERE
+    goodsId=#{goodsId}  
+  </update>
+  
+  
+    <update id="changeGoodsNums" parameterType="java.util.List">  
+        <foreach collection="list" item="orderdetail"  separator=";">  
+            update gmm_goods set goods_nums=goods_nums-#{orderdetail.goodsNums}
+            where goodsId=#{orderdetail.goodsId} and goods_nums>0;
+        </foreach>  
+    </update>  
+ 
+ 
+ </mapper> 

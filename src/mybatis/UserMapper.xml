@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdo.user.dao.UserDao">
+    
+   <resultMap type="com.sdo.entity.User" id="User">
+    <id column="name" property="name"/>
+    <result column="username"  property="username"/>
+    <!-- <result column="password"  property="password"/> -->
+     <result column="wallet"  property="wallet"/>
+     <collection property="orderList" resultMap="com.sdo.order.dao.OrderDao.Order"></collection>
+    </resultMap>
+	
+	<select id="querryOrderListByBuyer" resultMap="User">
+	select *  from  gmm_user u left join gmm_order o on u.username=o.buyer where u.username=#{username}
+	</select>
+	 
+	<select id="getUserByUsername" resultMap="User">
+    select u.username,u.wallet,o.* ,ot.*
+	from  
+	(gmm_user u 
+	left join 
+	gmm_order o 
+	on u.username=o.buyer)
+	left join
+	gmm_orderdetail ot
+	on ot.order_id=o.order_id
+	where u.username=#{username}
+	order by o.create_time desc
+	</select>
+	
+	
+	
+	
+	<select id="selectUserByUserName" parameterType="String" resultType="User">
+     SELECT * FROM gmm_user where username=#{_parameter}
+    </select>
+    
+    <select id="selectWhoByUserName" parameterType="String" resultType="String">
+     SELECT role FROM gmm_user where username=#{role}
+    </select>
+    
+  	<insert id="save" parameterType="User" flushCache="true">
+		insert into gmm_user(username,password,email,role,wallet) values(#{username}, #{password},#{email},'0',0)
+	</insert>
+    
+	<update id="deductWallet">
+		UPDATE gmm_user SET
+		wallet =wallet-#{totalPrice}
+		WHERE
+		username=#{buyer}
+	</update>
+	
+	<update id="refund">
+		UPDATE gmm_user SET
+		wallet =wallet+#{totalPrice}
+		WHERE
+		username=#{buyer}
+	</update>
+	
+	<select id="querryWallet" parameterType="String" resultType="java.math.BigDecimal">
+     SELECT wallet FROM gmm_user where username=#{_parameter}
+    </select>
+    
+    
+	<select id="querryGoodsBySeller" parameterType="String" resultType="Goods">
+     SELECT * FROM gmm_goods where seller=#{_parameter} and state='正在出售'
+    </select>
+    
+    
+       
+    <update id="updateWallet" parameterType="java.util.List">  
+        <foreach collection="list" item="orderdetail"  separator=";">  
+            update gmm_user 
+            <set>
+             wallet=wallet+#{orderdetail.subtotal},
+            </set>
+            where username=#{orderdetail.seller}  
+        </foreach>  
+    </update>  
+ </mapper> 

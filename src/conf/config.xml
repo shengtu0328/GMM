@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="useColumnLabel" value="true" /><!-- select 列名 as 属性名    from 表 查出后会自动封装成实体类的对象 -->
+		<setting name="useGeneratedKeys" value="true" />  <!-- 数据库自增 insert时 不插入 id  id是自增的 -->
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="mapUnderscoreToCamelCase" value="true" /> 
+       <!--  <setting name="logImpl" value="LOG4J"/>  --> 
+    </settings>  
+
+</configuration>

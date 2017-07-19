@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.sw.dao.UserDao">
+
+	<cache eviction="FIFO" flushInterval="60000" size="500" readOnly="true"></cache>
+
+	<insert id="save" parameterType="User" flushCache="true">
+		insert into user(username,password,email,name,telephone,who) values(#{username}, #{password},#{email},#{name},#{telephone},0)
+	</insert>
+	
+	<select id="selectPasswordByName" parameterType="String" resultType="String" useCache="false">
+	    select password from user where  username=#{username}
+	</select>
+	
+	<delete id="deleteById" parameterType="int" flushCache="true">
+	   DELETE from user where id=#{uId}
+	</delete>
+	
+	<select id="selectAll" resultType="User">
+	    select * from user
+	</select>
+	
+	
+   <select id="selectUserByName" parameterType="String" resultType="User" useCache="false">
+	    select * from user where  username=#{username}
+	</select>
+	
+   
+	
+</mapper> 

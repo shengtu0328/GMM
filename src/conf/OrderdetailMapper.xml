@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sw.dao.OrderdetailDao">
+	<insert id="writeorderdetail"  flushCache="true">
+		insert into orderdetail(goodsid,price,goodstitle,order1id,totalprice,orderdetailstate,goodsnums)values(#{goodsid},#{price},#{goodstitle},#{order1id},#{totalprice},#{orderdetailstate},#{goodsnums})
+	</insert>
+	
+
+
+	<update id="modifyorderdetailstate" parameterType="Orderdetail">
+	    update orderdetail set orderdetailstate='已发货'  where order1id=#{order1id}
+	</update> 
+	
+
+
+</mapper> 

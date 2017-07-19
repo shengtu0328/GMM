@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sw.dao.OrderDao">
+	<insert id="writeorder"  flushCache="true">
+		insert into order1(orderid,username,time,totalprice,state)values(#{orderid},#{username},#{time},#{totalprice},#{state})
+	</insert>
+	
+	<update id="finishorder" parameterType="Order">
+	    update order1 set state='已付款'  where orderid=#{orderid}
+	</update> 
+	
+	
+	
+     <select id="selectmaxorderid" resultType="int">
+	    select max(orderid) from order1
+	</select>
+	
+	
+     <select id="selectmyorder" resultType="Order">
+	    select * from order1 where  username=#{username}
+	</select>
+</mapper> 

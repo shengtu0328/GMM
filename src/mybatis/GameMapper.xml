@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdo.goods.dao.GameDao">
+
+    <select id="getAllGameAreas" resultType="GameArea">
+     SELECT * FROM game_area 
+    </select>
+    
+    <select id="getAllGameOccupations" resultType="GameOccupation">
+     SELECT * FROM game_occupation
+    </select>
+    
+    
+</mapper> 

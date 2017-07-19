@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdo.shoppingcar.dao.ShoppingCarDao">
+
+
+    
+	<insert id="add" parameterType="ShoppingCar" flushCache="true">
+	insert into gmm_shoppingcar (goods_id,price,buyer,seller,goods_title,goods_nums,image,area) 
+		        values(#{goodsId},#{price},#{buyer},#{seller},#{goodsTitle},#{goodsNums},#{image},#{area})
+	</insert>
+	
+     <select id="selectShoppingcarByUsernameAndGoodsId"  resultType="ShoppingCar">
+    SELECT * FROM gmm_shoppingcar WHERE  buyer=#{buyer} and goods_id=#{goodsId}
+    </select>
+    
+    <update id="addGoodsNums">
+    UPDATE gmm_shoppingcar SET
+    goods_nums =gmm_shoppingcar.goods_nums+#{goodsNums}
+    WHERE
+    buyer=#{buyer} and goods_id=#{goodsId} 
+  </update>
+  
+  <update id="updateGoodsNums" >
+    UPDATE gmm_shoppingcar SET
+    goods_nums=#{goodsNums}
+    WHERE
+    buyer=#{buyer} and goods_id=#{goodsId} 
+  </update>
+  
+  
+  
+   <select id="show"  resultType="ShoppingCar">
+    SELECT * FROM gmm_shoppingcar WHERE  buyer=#{buyer} 
+    </select>
+    
+    <delete id="delete" >
+    DELETE FROM gmm_shoppingcar WHERE goods_id = #{goodsId} and buyer=#{buyer} 
+  </delete>
+  
+  
+ 
+   <delete id="deleteshoppingcarList" parameterType="java.util.List">
+    DELETE FROM gmm_shoppingcar WHERE shoppingcar_id in(
+     <foreach collection="list" item="shoppingcarId"  separator=",">
+		        #{shoppingcarId}
+    </foreach>
+    )
+  </delete>
+  
+     <select id="selectCountsByUserName"  resultType="int">
+    SELECT count(*) FROM gmm_shoppingcar WHERE  buyer=#{buyer} 
+    </select>
+    
+    
+</mapper> 

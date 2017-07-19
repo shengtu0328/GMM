@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdo.seckill.dao.SuccessKilledDao">
+
+
+   <insert id="insertSuccessKilled">
+    insert ignore into gmm_success_killed(seckill_id,username,state)
+    values(#{seckillId},#{username},0)
+   </insert>
+    
+    
+    <select id="querryByIdWithSeckill" resultType="SuccessKilled" >
+	SELECT 
+    sk.seckill_id,
+	sk.state,
+	sk.create_time,
+	s.seckill_id "seckill.seckill_id",
+	s.name "seckill.name",
+	s.number "seckill.number",
+	s.start_time "seckill.start_time" ,
+	s.end_time "seckill.end_time" ,
+	s.create_time "seckill.create_time" 
+    FROM
+	gmm_success_killed sk
+	inner join 
+	gmm_seckill s 
+	on
+	 sk.seckill_id=s.seckill_id
+	where sk.seckill_id=#{seckillId} and sk.username=#{username} 
+    </select>
+    
+</mapper> 

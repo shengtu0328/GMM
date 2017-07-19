@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sw.dao.ShoppingcarDao">
+
+     <insert id="addshoppingcar"  useGeneratedKeys="true"  flushCache="true">
+		insert into shoppingcar (goodsid,price,username,goodstitle,goodsnums,totalprice,picture) 
+		        values(#{goodsid},#{price},#{username},#{goodstitle},#{goodsnums},#{totalprice},#{picture})
+	</insert>
+    
+    
+   <select id="selectshoppingcar" parameterType="String" resultType="Shoppingcar" useCache="false">
+	    select * from shoppingcar where username=#{username}
+	</select>
+	          
+	       <select id="selectcountbyusername" parameterType="Shoppingcar"  resultType="int" useCache="false">
+	    select count(*) from shoppingcar where username=#{username}
+	</select>
+	
+	  <delete id="deleteshoppingcar" parameterType="String">
+        delete  from shoppingcar where username=#{username}
+    </delete>
+		
+	<!-- <update id="jianqian" >
+	    update zhifubao set money=money-#{0} where username=#{1}
+	</update>
+	
+		
+	<update id="jiaqian" >
+	    update zhifubao set money=money+#{0} where username=#{1}
+	</update>
+	  -->
+</mapper> 
